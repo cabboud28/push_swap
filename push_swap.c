@@ -6,7 +6,7 @@
 /*   By: cabboud <cabboud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 08:28:09 by cabboud           #+#    #+#             */
-/*   Updated: 2026/02/16 08:46:08 by cabboud          ###   ########.fr       */
+/*   Updated: 2026/02/16 09:46:59 by cabboud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,30 +92,39 @@ void	print_bench(char *ops, char *comp, double d)
 		c_op(ops, "rrb"), c_op(ops, "rrr"));
 }
 
+static void	handle_sort(t_list **a, char **ops, double disorder, char *comp)
+{
+	int	size;
+
+	size = ft_lstsize(*a);
+	if (disorder == 0.0)
+		*ops = ft_strdup("");
+	else if (size == 3)
+		sort_three(a, ops);
+	else if (size == 5)
+		sort_five(a, ops);
+	else
+		solve(a, disorder, ops, comp);
+}
+
 int	main(int argc, char **argv)
 {
 	int		bench;
 	char	*comp;
 	char	*ops;
-	t_list	*a;
-	t_list	*b;
+	double	disorder;
+	t_list	*stack_a;
 
 	ops = NULL;
-	a = validate(argc, argv, &bench, &comp);
-	if (!a)
+	stack_a = validate(argc, argv, &bench, &comp);
+	if (!stack_a)
 		return (free(comp), 0);
-	if (compute_disorder(a) == 0.0)
-		ops = ft_strdup("");
-	else if (ft_lstsize(a) == 3)
-		sort_three(&a, &ops);
-	else if (ft_lstsize(a) == 5)
-		(b = NULL, sort_five(&a, &b, &ops));
-	else
-		solve(&a, compute_disorder(a), &ops, comp);
+	disorder = compute_disorder(stack_a);
+	handle_sort(&stack_a, &ops, disorder, comp);
 	ft_strjoin_sep(&ops, "", "\n");
 	if (bench == 0)
 		ft_printf(1, "%s", ops);
-	else
-		print_bench(ops, comp, compute_disorder(a));
-	return (ft_lstclear(&a, free), free(comp), free(ops), 0);
+	if (bench == 1)
+		print_bench(ops, comp, disorder);
+	return (ft_lstclear(&stack_a, free), free(comp), free(ops), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: cabboud <cabboud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 08:28:16 by cabboud           #+#    #+#             */
-/*   Updated: 2026/02/16 08:28:18 by cabboud          ###   ########.fr       */
+/*   Updated: 2026/02/16 09:39:07 by cabboud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ void	ra(t_list **stack_a, char **ops);
 void	rb(t_list **stack_b, char **ops);
 void	rrb(t_list **stack_b, char **ops);
 void	sort_push_a(t_list **stack_a, t_list **stack_b, char **ops, int n);
-void	sort_two(t_list **stack, char **ops);
 void	sort_three(t_list **stack, char **ops);
-void	sort_four(t_list **stack_a, t_list **stack_b, char **ops);
-void	sort_five(t_list **stack_a, t_list **stack_b, char **ops);
+void	sort_five(t_list **stack_a, char **ops);
 void	sa(t_list **stack, char **ops);
 void	sa_ra(t_list **stack, char **ops);
 void	sa_rra(t_list **stack, char **ops);
