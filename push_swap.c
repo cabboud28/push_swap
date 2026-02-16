@@ -6,7 +6,7 @@
 /*   By: cabboud <cabboud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 08:28:09 by cabboud           #+#    #+#             */
-/*   Updated: 2026/02/16 09:46:59 by cabboud          ###   ########.fr       */
+/*   Updated: 2026/02/16 11:29:09 by cabboud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,19 @@ void	print_bench(char *ops, char *comp, double d)
 		c_op(ops, "rrb"), c_op(ops, "rrr"));
 }
 
-static void	handle_sort(t_list **a, char **ops, double disorder, char *comp)
+static void	handle_sort(t_list **a, char **ops, char *comp)
 {
-	int	size;
+	double	d;
 
-	size = ft_lstsize(*a);
-	if (disorder == 0.0)
+	d = compute_disorder(*a);
+	if (d == 0.0)
 		*ops = ft_strdup("");
-	else if (size == 3)
+	else if (ft_lstsize(*a) == 3)
 		sort_three(a, ops);
-	else if (size == 5)
+	else if (ft_lstsize(*a) == 5)
 		sort_five(a, ops);
 	else
-		solve(a, disorder, ops, comp);
+		solve(a, d, ops, comp);
 }
 
 int	main(int argc, char **argv)
@@ -112,19 +112,16 @@ int	main(int argc, char **argv)
 	int		bench;
 	char	*comp;
 	char	*ops;
-	double	disorder;
-	t_list	*stack_a;
+	t_list	*a;
 
 	ops = NULL;
-	stack_a = validate(argc, argv, &bench, &comp);
-	if (!stack_a)
+	a = validate(argc, argv, &bench, &comp);
+	if (!a)
 		return (free(comp), 0);
-	disorder = compute_disorder(stack_a);
-	handle_sort(&stack_a, &ops, disorder, comp);
-	ft_strjoin_sep(&ops, "", "\n");
-	if (bench == 0)
-		ft_printf(1, "%s", ops);
+	handle_sort(&a, &ops, comp);
+	if (ops && *ops)
+		(ft_strjoin_sep(&ops, "", "\n"), ft_printf(1, "%s", ops));
 	if (bench == 1)
-		print_bench(ops, comp, disorder);
-	return (ft_lstclear(&stack_a, free), free(comp), free(ops), 0);
+		print_bench(ops, comp, compute_disorder(a));
+	return (ft_lstclear(&a, free), free(comp), free(ops), 0);
 }

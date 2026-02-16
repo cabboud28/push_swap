@@ -44,10 +44,9 @@ int	check_input(int *i, char **argv, char **nbs)
 	j = -1;
 	while (argv[*i])
 	{
-		ft_strjoin_sep(nbs, argv[*i], " ");
+		ft_strjoin_sep(nbs, argv[(*i)++], " ");
 		if (!*nbs)
 			return (-1);
-		(*i)++;
 	}
 	s = *nbs;
 	while (s[++j])
