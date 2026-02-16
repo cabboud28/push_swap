@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cabboud <cabboud@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/16 08:28:39 by cabboud           #+#    #+#             */
+/*   Updated: 2026/02/16 08:28:39 by cabboud          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "push_swap.h"
 
@@ -68,7 +78,7 @@ long	ft_atoi_overflow(const char *str, int *overflow)
 	while ((str[i] >= '0' && str[i] <= '9'))
 	{
 		nb = nb * 10 + (str[i] - '0');
-		if ((sign == 1 && nb > INT_MAX) 
+		if ((sign == 1 && nb > INT_MAX)
 			|| (sign == -1 && (nb * -1) < INT_MIN))
 			return (*overflow = 1, 0);
 		i++;

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cabboud <cabboud@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/16 08:28:09 by cabboud           #+#    #+#             */
+/*   Updated: 2026/02/16 08:46:08 by cabboud          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "push_swap.h"
 
@@ -90,7 +101,8 @@ int	main(int argc, char **argv)
 	t_list	*b;
 
 	ops = NULL;
-	if (!(a = validate(argc, argv, &bench, &comp)))
+	a = validate(argc, argv, &bench, &comp);
+	if (!a)
 		return (free(comp), 0);
 	if (compute_disorder(a) == 0.0)
 		ops = ft_strdup("");
@@ -107,4 +119,3 @@ int	main(int argc, char **argv)
 		print_bench(ops, comp, compute_disorder(a));
 	return (ft_lstclear(&a, free), free(comp), free(ops), 0);
 }
-
