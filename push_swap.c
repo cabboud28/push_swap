@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cabboud <cabboud@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 08:28:09 by cabboud           #+#    #+#             */
-/*   Updated: 2026/02/16 11:29:09 by cabboud          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "push_swap.h"
 
@@ -84,44 +73,38 @@ void	print_bench(char *ops, char *comp, double d)
 		else
 			ft_printf(2, "[bench] strategy: Adaptive / O(n log n)\n");
 	}
-	ft_printf(2, "[bench] total_ops: %i\n", total_ops(ops));
-	ft_printf(2, "[bench] sa: %i sb:%i ss: %i pa: %i pb: %i\n", c_op(ops, "sa"),
+	ft_printf(2, "[bench] total_operations: %i\n", total_ops(ops));
+	ft_printf(2, "[bench] sa: %i sb:%i ss: %i pa: %i pb: %i\n" , c_op(ops, "sa"),
 		c_op(ops, "sb"), c_op(ops, "ss"), c_op(ops, "pa"), c_op(ops, "pb"));
 	ft_printf(2, "[bench] ra: %i rb:%i rr: %i rra: %i rrb: %i rrr: %i\n",
 		c_op(ops, "ra"), c_op(ops, "rb"), c_op(ops, "rr"), c_op(ops, "rra"),
 		c_op(ops, "rrb"), c_op(ops, "rrr"));
 }
 
-static void	handle_sort(t_list **a, char **ops, char *comp)
-{
-	double	d;
-
-	d = compute_disorder(*a);
-	if (d == 0.0)
-		*ops = ft_strdup("");
-	else if (ft_lstsize(*a) == 3)
-		sort_three(a, ops);
-	else if (ft_lstsize(*a) == 5)
-		sort_five(a, ops);
-	else
-		solve(a, d, ops, comp);
-}
-
 int	main(int argc, char **argv)
 {
 	int		bench;
 	char	*comp;
-	char	*ops;
-	t_list	*a;
+	char	*operations;
+	double	disorder;
+	t_list	*stack_a;
 
-	ops = NULL;
-	a = validate(argc, argv, &bench, &comp);
-	if (!a)
+	operations = NULL;
+	stack_a = validate(argc, argv, &bench, &comp);
+	if (!stack_a)
 		return (free(comp), 0);
-	handle_sort(&a, &ops, comp);
-	if (ops && *ops)
-		(ft_strjoin_sep(&ops, "", "\n"), ft_printf(1, "%s", ops));
+	disorder = compute_disorder(stack_a);
+	if (disorder == 0.0)
+		operations = ft_strdup("");
+	else if (ft_lstsize(stack_a) == 3)
+		sort_three(&stack_a, &operations);
+	else
+		solve(&stack_a, disorder, &operations, comp);
+	ft_strjoin_sep(&operations, "", "\n");
+	if (bench == 0)
+    	ft_printf(1, "%s", operations);
 	if (bench == 1)
-		print_bench(ops, comp, compute_disorder(a));
-	return (ft_lstclear(&a, free), free(comp), free(ops), 0);
+		print_bench(operations, comp, disorder);
+	ft_lstclear(&stack_a, free);
+	return (free(comp), free(operations), 0);
 }
