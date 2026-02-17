@@ -98,6 +98,8 @@ int	main(int argc, char **argv)
 		operations = ft_strdup("");
 	else if (ft_lstsize(stack_a) == 3)
 		sort_three(&stack_a, &operations);
+	else if (ft_lstsize(stack_a) == 5)
+		sort_five(&stack_a, &operations);
 	else
 		solve(&stack_a, disorder, &operations, comp);
 	ft_strjoin_sep(&operations, "", "\n");
@@ -108,3 +110,4 @@ int	main(int argc, char **argv)
 	ft_lstclear(&stack_a, free);
 	return (free(comp), free(operations), 0);
 }
+
